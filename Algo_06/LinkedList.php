@@ -51,6 +51,19 @@ class LinkedList
         return true;
     }
 
+    public function insertNodeAfter(LinkedListNode $node, LinkedListNode $newNode)
+    {
+        if (null == $node){
+            return false;
+        }
+
+        $newNode->next = $node->next;
+        $node->next = $newNode;
+        $this->length++;
+
+        return $node;
+    }
+
     // (少用)结点前插入结点
     public function insertBefore(LinkedListNode $node, $data)
     {
@@ -108,5 +121,28 @@ class LinkedList
         echo 'NULL' . PHP_EOL;
 
         return true;
+    }
+    
+    public function buildHasCircleList()
+    {
+        $node0 = new LinkedListNode(1);
+        $node1 = new LinkedListNode(2);
+        $node2 = new LinkedListNode(3);
+        $node3 = new LinkedListNode(4);
+        $node4 = new LinkedListNode(5);
+        $node5 = new LinkedListNode(6);
+        $node6 = new LinkedListNode(7);
+        $node7 = new LinkedListNode(8);
+
+        $this->insertNodeAfter($this->head, $node0);
+        $this->insertNodeAfter($node0, $node1);
+        $this->insertNodeAfter($node1, $node2);
+        $this->insertNodeAfter($node2, $node3);
+        $this->insertNodeAfter($node3, $node4);
+        $this->insertNodeAfter($node4, $node5);
+        $this->insertNodeAfter($node5, $node6);
+        $this->insertNodeAfter($node6, $node7);
+
+        $node7->next = $node4;
     }
 }
