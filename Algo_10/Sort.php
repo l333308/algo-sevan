@@ -50,15 +50,119 @@ function insertionSort(array $arr)
 
 function selectionSort(array $arr)
 {
-
+    // TODO
 }
+
+// 利用递归思想 归并排序数组
+function mergeSortRecursive(array $arr, $start, $end)
+{
+    // 递归终止条件
+    if ($start >= $end){
+        return [$arr[$end]];
+    }
+
+    // 求出左右数组分界点
+    $middle = (int)(($start + $end) / 2);
+
+    // 递归得出左右数组
+    $left = mergeSortRecursive($arr, $start, $middle);
+    $right = mergeSortRecursive($arr, $middle + 1, $end);
+
+    // 左右数组合并
+    return merge($left, $right);
+}
+
+// 合并有序数组 类似合并有序链表
+function merge(array $left, array $right)
+{
+    // 合并后数组
+    $merge = [];
+
+    // 左右数组分别设一游标 指向第一个元素
+    $lenLeft = count($left);
+    $lenRight = count($right);
+    $cursorLeft = 0;
+    $cursorRight = 0;
+
+    // 当左右数组任一遍历结束 结束循环
+    while ( ($cursorLeft < $lenLeft) && ($cursorRight < $lenRight) ){
+        // 比较左、右游标
+        if ($left[$cursorLeft] < $right[$cursorRight]){
+            $merge[] = $left[$cursorLeft];
+            $cursorLeft++;
+        }else{
+            $merge[] = $right[$cursorRight];
+            $cursorRight++;
+        }
+    }
+
+    // 最后 拼接未遍历完的左或右数组
+    if ($cursorLeft < $lenLeft){
+        do{
+            $merge[] = $left[$cursorLeft];
+            $cursorLeft++;
+        }while($cursorLeft < $lenLeft);
+    }else{
+        do{
+            $merge[] = $right[$cursorRight];
+            $cursorRight++;
+        }while($cursorRight < $lenRight);
+    }
+    
+    return $merge;
+}
+
+function quickSort(array &$arr)
+{
+    $n = count($arr);
+    quickSortInternal($arr, 0, $n - 1);
+}
+
+function quickSortInternal(array &$arr, int $start, int $end)
+{
+    if ($start >= $end){
+        return ;
+    }
+
+    $pivot = partition($arr, $start, $end);
+    quickSortInternal($arr, $start, $pivot - 1);
+    quickSortInternal($arr, $pivot + 1, $end);
+}
+
+function partition(array &$arr, int $start, int $end)
+{
+    $pivot = $arr[$end];
+    $i = $start;
+
+    for($j = $start; $j < $end; $j++){
+        if ($arr[$j] < $pivot){
+            [$arr[$j], $arr[$i]] = [$arr[$i], $arr[$j]];
+            $i++;
+        }
+    }
+
+    [$arr[$end], $arr[$i]] = [$arr[$i], $arr[$end]];
+
+    return $i;
+}
+
+echo '-----------------------------选择排序-------------------------------';
+echo PHP_EOL;
+echo "TODO...";
+echo PHP_EOL;
+echo PHP_EOL;
+
+
+print_r(time());
+echo PHP_EOL;
+print_r(strtotime('2020-09-16 00:00:00'));
 
 echo '-----------------------------冒泡排序-------------------------------';
 echo PHP_EOL;
 $targetArr = range(1, 10000);
 $i = 0;
 shuffle($targetArr);
-$targetArr1 = $targetArr;
+$targetArr3 = $targetArr2 = $targetArr1 = $targetArr;
 
 $bubbleArr = [8,15,20,3,21,3,17];
 
@@ -84,7 +188,33 @@ echo "插入排序耗时:{$timeDiff}s";
 echo PHP_EOL;
 echo PHP_EOL;
 
-echo '-----------------------------选择排序-------------------------------';
+echo '-----------------------------归并排序-------------------------------';
 echo PHP_EOL;
-echo "TODO...";
+
+$begin = microtime(true);
+print_r(count($targetArr2));
+echo PHP_EOL;
+
+$targetArr2 = mergeSortRecursive($targetArr2, 0, 9999);
+$end = microtime(true);
+//print_r($targetArr2);
+echo PHP_EOL;
+
+$timeDiff = $end - $begin;
+echo "归并排序耗时:{$timeDiff}s";
+echo PHP_EOL;
+echo PHP_EOL;
+
+echo '-----------------------------快速排序-------------------------------';
+echo PHP_EOL;
+
+$begin = microtime(true);
+quickSort($targetArr3);
+$end = microtime(true);
+//print_r($targetArr3);
+echo PHP_EOL;
+
+$timeDiff = $end - $begin;
+echo "快速排序耗时:{$timeDiff}s";
+echo PHP_EOL;
 echo PHP_EOL;
