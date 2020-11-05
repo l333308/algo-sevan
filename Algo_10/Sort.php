@@ -134,6 +134,7 @@ function partition(array &$arr, int $start, int $end)
     $pivot = $arr[$end];
     $i = $start;
 
+    // 如arr[j] < pivot swap arr[i]与arr[j]
     for($j = $start; $j < $end; $j++){
         if ($arr[$j] < $pivot){
             [$arr[$j], $arr[$i]] = [$arr[$i], $arr[$j]];
@@ -141,6 +142,7 @@ function partition(array &$arr, int $start, int $end)
         }
     }
 
+    // 遍历结束后 交换arr[i]与pivot的值
     [$arr[$end], $arr[$i]] = [$arr[$i], $arr[$end]];
 
     return $i;
@@ -162,7 +164,7 @@ echo PHP_EOL;
 $targetArr = range(1, 10000);
 $i = 0;
 shuffle($targetArr);
-$targetArr3 = $targetArr2 = $targetArr1 = $targetArr;
+$targetArr4 = $targetArr3 = $targetArr2 = $targetArr1 = $targetArr;
 
 $bubbleArr = [8,15,20,3,21,3,17];
 
@@ -211,10 +213,24 @@ echo PHP_EOL;
 $begin = microtime(true);
 quickSort($targetArr3);
 $end = microtime(true);
-//print_r($targetArr3);
+print_r($targetArr3);
 echo PHP_EOL;
 
 $timeDiff = $end - $begin;
 echo "快速排序耗时:{$timeDiff}s";
+echo PHP_EOL;
+echo PHP_EOL;
+
+echo '-----------------------------桶排序-------------------------------';
+echo PHP_EOL;
+
+$begin = microtime(true);
+//bucketSort($targetArr4);
+$end = microtime(true);
+//print_r($targetArr4);
+echo PHP_EOL;
+
+$timeDiff = $end - $begin;
+echo "桶排序耗时:{$timeDiff}s";
 echo PHP_EOL;
 echo PHP_EOL;
