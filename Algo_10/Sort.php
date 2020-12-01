@@ -50,7 +50,25 @@ function insertionSort(array $arr)
 
 function selectionSort(array $arr)
 {
-    // TODO
+    if(($count = count($arr)) < 2) return;
+
+    // 大 -> 小 则内层循环判断条件为 <
+    // 小 -> 大 则内层循环判断条件为 >
+    for($i = 0; $i < $count - 1; $i++){
+        $swapFlag = false;
+
+        for($j = $i + 1; $j < $count; $j++){
+            if ($arr[$i] > $arr[$j]){
+                [$arr[$i], $arr[$j]] = [$arr[$j], $arr[$i]];
+                $swapFlag = true;
+            }
+        }
+
+        // 该轮遍历若不用冒泡 则数组已有序 退出循环
+        if(!$swapFlag) break;
+    }
+
+    return $arr;
 }
 
 // 利用递归思想 归并排序数组
@@ -148,25 +166,12 @@ function partition(array &$arr, int $start, int $end)
     return $i;
 }
 
-echo '-----------------------------选择排序-------------------------------';
-echo PHP_EOL;
-echo "TODO...";
-echo PHP_EOL;
-echo PHP_EOL;
-
-
-print_r(time());
-echo PHP_EOL;
-print_r(strtotime('2020-09-16 00:00:00'));
+$targetArr = range(1, 10000);
+shuffle($targetArr);
+$targetArr5 = $targetArr4 = $targetArr3 = $targetArr2 = $targetArr1 = $targetArr;
 
 echo '-----------------------------冒泡排序-------------------------------';
 echo PHP_EOL;
-$targetArr = range(1, 10000);
-$i = 0;
-shuffle($targetArr);
-$targetArr4 = $targetArr3 = $targetArr2 = $targetArr1 = $targetArr;
-
-$bubbleArr = [8,15,20,3,21,3,17];
 
 $begin = microtime(true);
 $targetArr = bubbleSort($targetArr);
@@ -176,6 +181,7 @@ $timeDiff = $end - $begin;
 echo "冒泡排序耗时:{$timeDiff}s";
 echo PHP_EOL;
 echo PHP_EOL;
+exit();
 
 echo '-----------------------------插入排序-------------------------------';
 echo PHP_EOL;
@@ -189,15 +195,26 @@ $timeDiff = $end - $begin;
 echo "插入排序耗时:{$timeDiff}s";
 echo PHP_EOL;
 echo PHP_EOL;
+echo '-----------------------------选择排序-------------------------------';
+echo PHP_EOL;
+
+$begin = microtime(true);
+$targetArr2 = selectionSort($targetArr2);
+$end = microtime(true);
+//print_r($targetArr1);
+
+$timeDiff = $end - $begin;
+echo "插入排序耗时:{$timeDiff}s";
+echo PHP_EOL;
+echo PHP_EOL;
 
 echo '-----------------------------归并排序-------------------------------';
 echo PHP_EOL;
 
 $begin = microtime(true);
-print_r(count($targetArr2));
 echo PHP_EOL;
 
-$targetArr2 = mergeSortRecursive($targetArr2, 0, 9999);
+$targetArr3 = mergeSortRecursive($targetArr3, 0, 9999);
 $end = microtime(true);
 //print_r($targetArr2);
 echo PHP_EOL;
@@ -211,9 +228,9 @@ echo '-----------------------------快速排序-------------------------------';
 echo PHP_EOL;
 
 $begin = microtime(true);
-quickSort($targetArr3);
+quickSort($targetArr4);
 $end = microtime(true);
-print_r($targetArr3);
+//print_r($targetArr3);
 echo PHP_EOL;
 
 $timeDiff = $end - $begin;
