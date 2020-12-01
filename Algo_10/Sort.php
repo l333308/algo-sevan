@@ -142,6 +142,8 @@ function quickSortInternal(array &$arr, int $start, int $end)
         return ;
     }
 
+    // !!① 找到pivot后 此处递归区间为[start, pivot -1]与 [pivot+1, end]
+    // 而不是[start, pivot]与 [pivot+1, end]
     $pivot = partition($arr, $start, $end);
     quickSortInternal($arr, $start, $pivot - 1);
     quickSortInternal($arr, $pivot + 1, $end);
@@ -181,7 +183,6 @@ $timeDiff = $end - $begin;
 echo "冒泡排序耗时:{$timeDiff}s";
 echo PHP_EOL;
 echo PHP_EOL;
-exit();
 
 echo '-----------------------------插入排序-------------------------------';
 echo PHP_EOL;
@@ -201,10 +202,10 @@ echo PHP_EOL;
 $begin = microtime(true);
 $targetArr2 = selectionSort($targetArr2);
 $end = microtime(true);
-//print_r($targetArr1);
+//print_r($targetArr2);
 
 $timeDiff = $end - $begin;
-echo "插入排序耗时:{$timeDiff}s";
+echo "选择排序耗时:{$timeDiff}s";
 echo PHP_EOL;
 echo PHP_EOL;
 
@@ -216,7 +217,7 @@ echo PHP_EOL;
 
 $targetArr3 = mergeSortRecursive($targetArr3, 0, 9999);
 $end = microtime(true);
-//print_r($targetArr2);
+//print_r($targetArr3);
 echo PHP_EOL;
 
 $timeDiff = $end - $begin;
@@ -230,7 +231,7 @@ echo PHP_EOL;
 $begin = microtime(true);
 quickSort($targetArr4);
 $end = microtime(true);
-//print_r($targetArr3);
+//print_r($targetArr4);
 echo PHP_EOL;
 
 $timeDiff = $end - $begin;
