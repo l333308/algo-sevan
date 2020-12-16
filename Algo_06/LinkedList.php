@@ -6,48 +6,34 @@ namespace Algo_06;
 
 class LinkedList
 {
-    /**
-     * 头结点 哨兵结点
-     * @var
-     */
     public $head;
 
-    /**
-     * 链表长度
-     * @var
-     */
     public $length;
 
-    public function __construct(LinkedListNode $head)
+    public function __construct()
     {
-        $this->head = $head;
+        $this->head = new LinkedListNode();
+        $this->length = 0;
     }
 
-    // 插入结点 此处用简单的头插入方式
     public function insert($data)
     {
         return $this->insertAfter($this->head, $data);
-
     }
 
-    // 结点后插入结点
     public function insertAfter(LinkedListNode $node, $data)
     {
         if (null == $node){
             return false;
         }
 
-        // 为data新建结点
-        $newNode = new LinkedListNode();
-        $newNode->data = $data;
-
-        // 指针操作
+        $newNode = new LinkedListNode($data);
+        
         $newNode->next = $node->next;
         $node->next = $newNode;
-
-        // 链表长度
+        
         $this->length++;
-
+        
         return true;
     }
 
@@ -59,9 +45,10 @@ class LinkedList
 
         $newNode->next = $node->next;
         $node->next = $newNode;
+        
         $this->length++;
-
-        return $node;
+        
+        return $newNode;
     }
 
     // (少用)结点前插入结点
