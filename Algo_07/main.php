@@ -150,7 +150,7 @@ function meet(int $holeCount, int $speedOfRabbit, int $speedOfWolf)
     }
 
     // 速度差
-    $speedDiff = $speedOfRabbit > $speedOfWolf;
+    $speedDiff = $speedOfRabbit - $speedOfWolf;
     $speedDiff = $speedDiff >= 0 ? $speedDiff : -$speedDiff;
 
     $days = 1;
@@ -163,9 +163,61 @@ function meet(int $holeCount, int $speedOfRabbit, int $speedOfWolf)
     }
 }
 
+function subTree(array $team)
+{
+    $result = [];
+    subTreeRecursive($team, $result);
+    
+    return $result;
+}
+
+function subTreeRecursive(array $team, array &$result, $father = null)
+{
+    foreach($team as $user => $treeOfUser) {
+        // 有father 当前user作为father的直接下级
+        $father && $result[$father][] = $user;
+
+        if (is_array($treeOfUser)){
+            // 递归获取user的下级列表
+            subTreeRecursive($treeOfUser, $result, $user);
+            // 有father 获取father的间接下级
+            $father && subTreeRecursive($treeOfUser, $result, $father);
+        }else{ // 递归终止条件 user无下级
+            $result[$user] = $treeOfUser;
+        }
+    }
+}
+
+echo '------------------递归下级列表-----------------';
+echo PHP_EOL;
+$team = [
+    '张三' => [
+        '李四' => null,
+        '王五' => [
+            '小白' => null,
+            '小红' => [
+                '小绿' => null,
+                '小黑' => null,
+            ]
+        ],
+    ],
+    '赵六' => [
+        '周七' => [
+            '小兰' => null,
+            '小黄' => [
+                '老朱' => null
+            ],
+        ],
+        '马八' => null,
+    ],
+];
+print_r(subTree($team));
+echo PHP_EOL;
+echo PHP_EOL;
+
 echo '------------------狼和兔子------------------';
 echo PHP_EOL;
-echo meet(21, 4, 2);
+echo meet(21, 6, 4);
 echo PHP_EOL;
 echo PHP_EOL;
 
