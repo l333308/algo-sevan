@@ -162,7 +162,9 @@ function partition(array &$arr, int $start, int $end)
         }
     }
 
-    // 遍历结束后 交换arr[i]与pivot的值
+    // 循环结束 交换arr[i]与arr[end] 而不是arr[i]与pivot
+    // !! 因为这里要将两数值交换位置 如果是arr[i]与pivot arr[end]还是原来的值
+    //[$arr[$i], $pivot] = [$pivot, $arr[$i]];
     [$arr[$end], $arr[$i]] = [$arr[$i], $arr[$end]];
 
     return $i;
